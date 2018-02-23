@@ -18,6 +18,8 @@ except ImportError:
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'Mbot'
+DISCORD_TOKEN = "TOKEN"
+SPREADSHEETID = "ID"
 
 bot = commands.Bot(command_prefix='mbot!')
 
@@ -81,9 +83,9 @@ def GetSheetResult(rangename):
                     'version=v4')
     service = discovery.build('sheets', 'v4', http=http,
                               discoveryServiceUrl=discoveryUrl)
-    spreadsheetId = 'spreadsheetId'
     
-    result = service.spreadsheets().values().get(spreadsheetId=spreadsheetId, range=rangename).execute()
+    
+    result = service.spreadsheets().values().get(spreadsheetId=SPREADSHEETID, range=rangename).execute()
     values = result.get('values', [])
     if not values:
         print('No data found.')
@@ -226,4 +228,4 @@ async def SendPlatoonOrders(ctx):
         else:
             await bot.say('Request finished')
 
-bot.run("Token")
+bot.run(DISCORD_TOKEN)
